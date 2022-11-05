@@ -22,7 +22,7 @@ const AlimentosScreen = ({navigation, route}: Props) => {
   }, []);
 
   return (
-    <View style={{flex:1,marginHorizontal:10,marginBottom:65}}>
+    <View style={{flex:1,marginHorizontal:10,marginBottom:80,marginTop:20}}>
       <FlatList
         data={alimentos}
         renderItem={({item}) => (
@@ -49,7 +49,7 @@ const style = StyleSheet.create({
     fontSize: 20,
     fontFamily: 'verdana',
     fontWeight: 'bold',
-    color:"#009688",
+    color:"#212121",
   },
   itemseparator: {
     borderBottomWidth: 1,

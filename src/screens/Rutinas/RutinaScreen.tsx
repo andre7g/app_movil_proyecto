@@ -19,7 +19,7 @@ const RutinaScreen = ({navigation, route}: Props) => {
     getSeries(id);
   }, []);
   return (
-    <View style={{flex:1,marginHorizontal:10}}>
+    <View style={{flex:1,marginHorizontal:10,marginBottom:80,marginTop:20}}>
       <FlatList
         data={series}
         renderItem={({item}) => (

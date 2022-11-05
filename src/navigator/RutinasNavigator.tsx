@@ -29,9 +29,10 @@ export const RutinasNavigator = () => {
             elevation: 0,
             shadowColor: 'transparent',
           },
-          headerTintColor: '#009688',//color del titulo de las rutas
+          headerTintColor: '#212121',//color del titulo de las rutas
           headerTitleStyle: {
             fontWeight: 'bold',
+            fontSize:28
           },
         }}>
         <Stack.Screen

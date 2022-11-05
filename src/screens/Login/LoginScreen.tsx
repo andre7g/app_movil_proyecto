@@ -1,4 +1,4 @@
-import React, { useContext,useEffect } from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -7,47 +7,48 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   Keyboard,
-  Alert
+  Alert,
 } from 'react-native';
 import {Background} from '../../components/login/Background';
 import {WhiteLogo} from '../../components/login/WhiteLogo';
 import {loginTheme} from '../../theme/loginTheme';
-import { useForm } from '../../hooks/useForm';
-import { StackScreenProps } from '@react-navigation/stack';
-import { AuthContext } from '../../context/AuthContext';
+import {useForm} from '../../hooks/useForm';
+import {StackScreenProps} from '@react-navigation/stack';
+import {AuthContext} from '../../context/AuthContext';
+import {UsuarioContext} from '../../context/UsuarioContext';
 
 interface Props extends StackScreenProps<any, any> {}
 
-export const LoginScreen = ({ navigation } : Props) => {
-    const { singIn, errorMessage, removeError } = useContext(AuthContext)
-   const{ code, pass, onChange } = useForm({
-    code: "",
-    pass:""
-   });
+export const LoginScreen = ({navigation}: Props) => {
+  const {singIn, errorMessage, removeError} = useContext(AuthContext);
 
+  const {code, pass, onChange} = useForm({
+    code: '',
+    pass: '',
+  });
 
-   useEffect(() => {
-    if(errorMessage.length === 0) return;
-    Alert.alert('Error:',errorMessage,[{ text:'Aceptar',onPress:removeError }]);
-   }, [errorMessage])
-   
+  useEffect(() => {
+    if (errorMessage.length === 0) return;
+    Alert.alert('Error:', errorMessage, [
+      {text: 'Aceptar', onPress: removeError},
+    ]);
+  }, [errorMessage]);
 
-   const onLogin = () => {
-    singIn({codigo:parseInt(code),pass:pass});
+  const onLogin = () => {
+    singIn({codigo: parseInt(code), pass: pass});
     Keyboard.dismiss();
-   }; 
+  };
 
   return (
     <>
       <Background />
       <KeyboardAvoidingView
-        style={{flex:1}}
+        style={{flex: 1}}
         // behavior={(Platform.OS === 'ios') ?  'padding' : 'height'}
       >
         <View style={loginTheme.container}>
           <WhiteLogo />
 
-          
           <Text style={loginTheme.label}>Código</Text>
           <TextInput
             placeholder="Ingresar Código"
@@ -59,11 +60,9 @@ export const LoginScreen = ({ navigation } : Props) => {
               Platform.OS === 'ios' && loginTheme.inputFieldIOS,
             ]}
             selectionColor="white" //al seleccionar texto doble click
-
-            onChangeText={ (value)  => onChange( value, 'code' ) }
-            value= { code }
-            onSubmitEditing={ onLogin }
-
+            onChangeText={value => onChange(value, 'code')}
+            value={code}
+            onSubmitEditing={onLogin}
             autoCapitalize="none"
             autoCorrect={false}
           />
@@ -79,14 +78,17 @@ export const LoginScreen = ({ navigation } : Props) => {
               Platform.OS === 'ios' && loginTheme.inputFieldIOS,
             ]}
             selectionColor="white" //al seleccionar texto doble click
-            onChangeText={ (value)  => onChange( value, 'pass' ) }
-            value= { pass }
-            onSubmitEditing={ onLogin }
+            onChangeText={value => onChange(value, 'pass')}
+            value={pass}
+            onSubmitEditing={onLogin}
             autoCapitalize="none"
             autoCorrect={false}
           />
           <View style={loginTheme.buttonContainer}>
-            <TouchableOpacity activeOpacity={0.4} style={loginTheme.button} onPress={onLogin}>
+            <TouchableOpacity
+              activeOpacity={0.4}
+              style={loginTheme.button}
+              onPress={onLogin}>
               <Text style={loginTheme.buttonText}>Ingresar</Text>
             </TouchableOpacity>
           </View>

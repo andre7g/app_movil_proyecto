@@ -7,15 +7,18 @@ import {DietasProvider} from './src/context/DietasContext';
 import {LoginScreen} from './src/screens/Login/LoginScreen';
 import {Navigator} from './src/navigator/Navigator';
 import {AuthProvider} from './src/context/AuthContext';
+import { UsuarioProvider } from './src/context/UsuarioContext';
 
 const AppState = ({children}: any) => {
   return (
     <AuthProvider>
+    <UsuarioProvider>
       <AlimentosProvider>
         <DietasProvider>
           <RutinasProvider>{children}</RutinasProvider>
         </DietasProvider>
       </AlimentosProvider>
+    </UsuarioProvider>
     </AuthProvider>
   );
 };

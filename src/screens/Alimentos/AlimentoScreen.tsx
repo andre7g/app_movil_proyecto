@@ -8,6 +8,7 @@ import {
   TextInput,
   Platform,
   KeyboardAvoidingView,
+  Keyboard,
 } from 'react-native';
 import {AlimentosStackParams} from '../../navigator/AlimentosNavigator';
 
@@ -22,20 +23,17 @@ import {useForm} from '../../hooks/useForm';
 import {Background} from '../../components/login/Background';
 import {alimentoTheme} from '../../theme/alimentoTheme';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoader from '../../components/loading/AppLoader';
+import { UsuarioContext } from '../../context/UsuarioContext';
 
 interface Props
   extends StackScreenProps<AlimentosStackParams, 'AlimentoScreen'> {}
 
 export const AlimentoScreen = ({navigation, route}: Props) => {
   const {id, name} = route.params;
-  const {alimentoDetalle, getById, addAlimento} = useContext(AlimentosContext);
-  //const [alimento, setalimento] = useState<Alimento>();
-  // useEffect(() => {
-  //   navigation.setOptions({
-    //     title: name,
-  //   });
-  // }, []);
-  //useefect para una tarea en especifico
+  const {loading, alimentoDetalle, getById, addAlimento} = useContext(AlimentosContext);
+  const {getUsuario} = useContext(UsuarioContext);
+
   useEffect(() => {
     loadAlimento();
   }, []);
@@ -46,10 +44,11 @@ export const AlimentoScreen = ({navigation, route}: Props) => {
     // console.log(alimento)
   };
   const addAlimentoUsuario = async () => {
+    Keyboard.dismiss();
     const userId = await AsyncStorage.getItem('userId');
     const res = await addAlimento({UsuarioId:userId,AlimentoId:id,Cantidad:parseInt(cantidad)});
-    // //setalimento(res);
-    console.log(res)
+    getUsuario();
+    navigation.pop()
   };
   const {cantidad, onChange} = useForm({
     cantidad: '',
@@ -58,6 +57,7 @@ export const AlimentoScreen = ({navigation, route}: Props) => {
   const {top} = useSafeAreaInsets();
   //const { isLoading, alimentoItem } = useAlimento(id)
   return (
+    <>
     <View>
       <View
         style={{
@@ -75,7 +75,7 @@ export const AlimentoScreen = ({navigation, route}: Props) => {
           <KeyboardAvoidingView
             style={{flex: 1,top: top + 40,}}
             // behavior={(Platform.OS === 'ios') ?  'padding' : 'height'}
-          >
+            >
             <View style={alimentoTheme.container}>
               <Text style={alimentoTheme.label}>Cantidad</Text>
               <TextInput
@@ -92,7 +92,7 @@ export const AlimentoScreen = ({navigation, route}: Props) => {
                 value={cantidad}
                 autoCapitalize="none"
                 autoCorrect={false}
-              />
+                />
               <View style={alimentoTheme.buttonContainer}>
                 <TouchableOpacity
                   activeOpacity={0.4}
@@ -104,7 +104,7 @@ export const AlimentoScreen = ({navigation, route}: Props) => {
 
               {/* <View style={alimentoTheme.newUserContainer}>
             <TouchableOpacity activeOpacity={0.4} onPress={ () => navigation.navigate('RegisterScreen') }>
-              <Text style={alimentoTheme.buttonText}>Nueva Cuenta</Text>
+            <Text style={alimentoTheme.buttonText}>Nueva Cuenta</Text>
             </TouchableOpacity>
           </View> */}
             </View>
@@ -161,12 +161,16 @@ export const AlimentoScreen = ({navigation, route}: Props) => {
           Carbohidratos: {alimentoDetalle?.carbohidratos_g}g
         </Text>
       </View>
+      
     </View>
+    { loading ? <AppLoader/> : null}
+    
+</>
   );
 };
 const styles = StyleSheet.create({
   headerContainer: {
-    height: 400,
+    height: 350,
     zIndex: 999,
     borderBottomRightRadius: 100,
     borderBottomLeftRadius: 100,
@@ -178,9 +182,10 @@ const styles = StyleSheet.create({
     left: 20,
   },
   alimentoProp: {
-    color: 'black',
+    color: '#424242',
     fontSize: 25,
     alignSelf: 'flex-start',
+    fontWeight: 'bold',
     left: 20,
   },
   imagenBack: {

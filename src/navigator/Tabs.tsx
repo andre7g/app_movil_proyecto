@@ -31,7 +31,7 @@ export const Tabs = () => {
           height: Platform.OS === 'ios' ? 80 : 60,
         },
       }}>
-      <Tab.Screen
+      {/* <Tab.Screen
         name="Agua"
         component={AlimentosNavigator}
         options={{
@@ -42,7 +42,19 @@ export const Tabs = () => {
           tabBarActiveTintColor: '#009688',
           tabBarInactiveTintColor: '#C6E2CF',
         }}
-      />
+      /> */}
+        <Tab.Screen
+          name="Usuario"
+          component={UsuarioNavigator}
+          options={{
+            tabBarLabel: 'Usuario',
+            tabBarIcon: () => (
+              <Icon name="fitness-outline" color="#009688" size={30} />
+            ),
+            tabBarActiveTintColor: '#009688',
+            tabBarInactiveTintColor: '#C6E2CF',
+          }}
+        />
       <Tab.Screen
         name="AlimentosNavigator"
         component={AlimentosNavigator}
@@ -50,18 +62,6 @@ export const Tabs = () => {
           tabBarLabel: 'Alimentos',
           tabBarIcon: () => (
             <Icon name="md-fast-food-outline" color="#009688" size={30} />
-          ),
-          tabBarActiveTintColor: '#009688',
-          tabBarInactiveTintColor: '#C6E2CF',
-        }}
-      />
-      <Tab.Screen
-        name="Usuario"
-        component={UsuarioNavigator}
-        options={{
-          tabBarLabel: 'Usuario',
-          tabBarIcon: () => (
-            <Icon name="fitness-outline" color="#009688" size={30} />
           ),
           tabBarActiveTintColor: '#009688',
           tabBarInactiveTintColor: '#C6E2CF',

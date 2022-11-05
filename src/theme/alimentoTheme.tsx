@@ -27,7 +27,7 @@ export const alimentoTheme = StyleSheet.create({
     },
     buttonContainer:{
         alignItems:"center",
-        marginTop:50
+        marginTop:20
     },
     buttonLogOutContainer:{
         alignItems:"flex-start",

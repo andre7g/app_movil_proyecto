@@ -8,6 +8,7 @@ import PostApi from '../api/PostApi';
 type AlimentosContextProps = {
   grupos: GrupoAlimenticio[];
   alimentos: Alimento[];
+  loading:boolean;
   alimentoDetalle: AlimentoDetalle|null;
   getGrupos: () => Promise<void>;
   getAlimentos: (grupoId: number) => Promise<void>;
@@ -25,7 +26,7 @@ export const AlimentosProvider = ({children}: any) => {
 
   const [grupos, setGrupos] = useState<GrupoAlimenticio[]>([]);
   const [alimentos, setAlimentos] = useState<Alimento[]>([]);
-
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     getGrupos();
   }, []);
@@ -59,6 +60,7 @@ export const AlimentosProvider = ({children}: any) => {
   };
 
   const addAlimento = async ({UsuarioId, AlimentoId,Cantidad}: Data) => {
+    setLoading(true);
     try {
       const {data} = await PostApi.post<AlimentosResponse>('/UsuariosAlimentos', {
         Data: {UsuarioId, AlimentoId,Cantidad},
@@ -66,6 +68,7 @@ export const AlimentosProvider = ({children}: any) => {
     } catch (error) {
       console.log(error);
     }
+    setLoading(false);
   };
 
   return (
@@ -78,6 +81,7 @@ export const AlimentosProvider = ({children}: any) => {
         getAlimentos,
         getById,
         addAlimento,
+        loading,
       }}>
       {children}
     </AlimentosContext.Provider>

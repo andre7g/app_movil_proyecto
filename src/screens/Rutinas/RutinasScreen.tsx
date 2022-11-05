@@ -17,7 +17,7 @@ const RutinasScreen = ({navigation, route}: Props) => {
   }, []);
 
   return (
-    <View style={{flex:1,marginHorizontal:10}}>
+    <View style={{flex:1,marginHorizontal:10,marginBottom:65,marginTop:10}}>
       <FlatList
         data={rutinas}
         renderItem={({item}) => (
@@ -49,7 +49,7 @@ const style = StyleSheet.create({
     borderBottomWidth: 1,
     marginBottom:20,
     borderBottomColor: 'rgba(0,0,0,0.1)',
-    height:20,
+    height:50,
   },
 });
 export default RutinasScreen

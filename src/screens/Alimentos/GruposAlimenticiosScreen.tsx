@@ -17,7 +17,7 @@ const GruposAlimenticiosScreen = ({navigation, route}: Props) => {
   }, []);
 
   return (
-    <View style={{flex:1,marginHorizontal:10,marginBottom:65}}>
+    <View style={{flex:1,marginHorizontal:10,marginBottom:80,marginTop:20}}>
       <FlatList
         data={grupos}
         renderItem={({item}) => (
@@ -42,7 +42,7 @@ const GruposAlimenticiosScreen = ({navigation, route}: Props) => {
 const style = StyleSheet.create({
   alimentoName: {
     fontSize: 20,
-    color:"#009688",
+    color:"#212121",
     fontWeight: 'bold',
   },
   itemseparator: {

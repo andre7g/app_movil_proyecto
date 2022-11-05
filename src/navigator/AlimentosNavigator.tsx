@@ -28,6 +28,12 @@ export const AlimentosNavigator = () => {
           headerStyle: {
             elevation: 0,
             shadowColor: 'transparent',
+            //backgroundColor:"#B2DFDB"            
+          },
+          headerTintColor: '#212121',//color del titulo de las rutas
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize:28
           },
         }}>
         <Stack.Screen

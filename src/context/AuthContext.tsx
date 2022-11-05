@@ -1,9 +1,10 @@
-import React, {createContext, useReducer, useEffect} from 'react';
+import React, {createContext, useReducer, useEffect, useContext} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import PostApi from '../api/PostApi';
 import {Auth, AuthResponse, Data} from '../interfaces/IAuth';
 import {authReducer, AuthState} from './AuthReducer';
 import AlimentosApi from '../api/AlimentosApi';
+import { UsuarioContext } from './UsuarioContext';
 
 type AuthContextProps = {
   errorMessage: string;
@@ -25,6 +26,7 @@ export const AuthContext = createContext({} as AuthContextProps);
 
 export const AuthProvider = ({children}: any) => {
   const [state, dispatch] = useReducer(authReducer, authInitialState);
+
 
   useEffect(() => {
     checkToken();

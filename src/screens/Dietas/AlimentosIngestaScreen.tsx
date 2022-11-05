@@ -19,7 +19,7 @@ const AlimentosIngestaScreen = ({navigation, route}: Props) => {
     getAlimentos(id);
   }, []);
   return (
-    <View style={{flex:1,marginHorizontal:10}}>
+    <View style={{flex:1,marginHorizontal:10,marginBottom:80,marginTop:20}}>
       <FlatList
         data={alimentos}
         renderItem={({item}) => (
