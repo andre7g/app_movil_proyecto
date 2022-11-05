@@ -1,31 +1,27 @@
 import { StyleSheet } from "react-native";
 
-export const loginTheme = StyleSheet.create({
+export const alimentoTheme = StyleSheet.create({
     container:{
         flex:1,
-        paddingHorizontal:30,
+        paddingHorizontal:100,
         justifyContent:"center",
-        height:600,
-        marginBottom:50
-
     },
     title:{
-        color: "white",
-        fontSize:30,
+        color: "#009688",
+        fontSize:40,
         fontWeight: "bold",
-        marginTop: 40,
+
     },
     label:{
-        marginTop:30,
-        color:"white",
+        color:"#009688",
         fontWeight:"bold"
     },
     inputField:{
-        color:"white",
-        fontSize:20,
+        color:"#009688",
+        fontSize:18,
     },
     inputFieldIOS:{
-        borderBottomColor:"white",
+        borderBottomColor:"#009688",
         borderBottomWidth:2,
         paddingBottom:5
     },
@@ -39,21 +35,21 @@ export const loginTheme = StyleSheet.create({
     },
     button:{
         borderWidth: 3,
-        borderColor: "white",
+        borderColor: "#009688",
         paddingHorizontal: 30,
         paddingVertical: 5,
         borderRadius: 100
     },
     buttonLogOut:{
         borderWidth: 4,
-        borderColor: "white",
+        borderColor: "#009688",
         paddingHorizontal: 30,
         paddingVertical: 5,
         // borderRadius: 100
     },
     buttonText:{
         fontSize:18,
-        color:"white"
+        color:"#009688"
     },
     newUserContainer:{
         alignItems:"flex-end",

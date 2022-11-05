@@ -37,7 +37,7 @@ export const AuthProvider = ({children}: any) => {
     if( !token ) return dispatch({type:'notAuthenticated'});
     //Hay Token => clase udemy react native 333, hay que validar token y expiracion de token 
     //crear en el backend y hacer de nuevo setItem del token por que cambia
-    const {data} = await AlimentosApi.get<AuthResponse>(`/Usuarios/VerificarUsuario/${userId}`)
+    const {data} = await AlimentosApi.get<AuthResponse>(`/Usuarios/VerificarMovil/${userId}`)
     if(data.status !== 200){
         return dispatch({type:'notAuthenticated'});
     }
@@ -53,7 +53,7 @@ export const AuthProvider = ({children}: any) => {
 
   const singIn = async ({codigo, pass}: Data) => {
     try {
-      const {data} = await PostApi.post<AuthResponse>('/Usuarios/login', {
+      const {data} = await PostApi.post<AuthResponse>('/Usuarios/authMovil', {
         Data: {codigo, pass},
       });
       if (data.status === 200) {

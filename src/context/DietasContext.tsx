@@ -3,12 +3,13 @@ import AlimentosApi from '../api/AlimentosApi';
 import { Dieta, DietasResponse } from '../interfaces/IDietas';
 import { Ingesta, IngestasResponse } from '../interfaces/IIngestas';
 import { Alimento, AlimentosIngestaResponse } from '../interfaces/IAlimentosIngesta';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 type DietasContextProps = {
   dietas: Dieta[];
   ingestas: Ingesta[];
   alimentos: Alimento[];
-  getDietas: (usuarioId: number) => Promise<void>;
+  getDietas: (usuarioId: string | null) => Promise<void>;
   getIngestas: (dietaId: number) => Promise<void>;
   getAlimentos: (ingestaId: number) => Promise<void>;
   getById: (id: number) => Promise<Dieta>;
@@ -22,14 +23,20 @@ export const DietasProvider = ({children}: any) => {
   const [ingestas, setIngestas] = useState<Ingesta[]>([]);
   const [alimentos, setAlimentos] = useState<Alimento[]>([]);
 
+  const getDietasByUser = async() => {
+    const userId = await AsyncStorage.getItem('userId');
+    getDietas(userId);
+  };
+
   useEffect(() => {
-    getDietas(2);
+    getDietasByUser();
   }, []);
 
-  const getDietas = async (usuarioId: number) => {
-    const res = await AlimentosApi.get<DietasResponse>(`/UsuarioDietas/all/${usuarioId}`);
-    setDietas(res.data.data);
-    console.log(dietas);
+  const getDietas = async (usuarioId: string | null) => {
+    if(usuarioId !== null){
+      const res = await AlimentosApi.get<DietasResponse>(`/UsuarioDietas/all/${usuarioId}`);
+      setDietas(res.data.data);
+    }
   };
 
   const getIngestas = async (dietaId: number) => {

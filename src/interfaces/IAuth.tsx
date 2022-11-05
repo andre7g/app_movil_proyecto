@@ -15,10 +15,5 @@ export interface Auth {
     id:      number;
     usuario: string;
     token:   string;
-    roles:   Role[];
 }
 
-export interface Role {
-    rol_Id: number;
-    rol:    string;
-}

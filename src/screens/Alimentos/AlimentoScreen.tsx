@@ -1,6 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {StackScreenProps} from '@react-navigation/stack';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {
+  Text,
+  View,
+  StyleSheet,
+  Image,
+  TextInput,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {AlimentosStackParams} from '../../navigator/AlimentosNavigator';
 
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -9,30 +17,43 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 //import { FadeInImage } from '../components/FadeInImage';
 import {AlimentosContext} from '../../context/AlimentosContext';
 import {FadeInImage} from '../../components/FadeInImage';
-import { Alimento } from '../../interfaces/IAlimentos';
+import {Alimento} from '../../interfaces/IAlimentos';
+import {useForm} from '../../hooks/useForm';
+import {Background} from '../../components/login/Background';
+import {alimentoTheme} from '../../theme/alimentoTheme';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface Props extends StackScreenProps<AlimentosStackParams, 'AlimentoScreen'> {}
+interface Props
+  extends StackScreenProps<AlimentosStackParams, 'AlimentoScreen'> {}
 
 export const AlimentoScreen = ({navigation, route}: Props) => {
   const {id, name} = route.params;
-  const {getById,alimento} = useContext(AlimentosContext);
+  const {alimentoDetalle, getById, addAlimento} = useContext(AlimentosContext);
   //const [alimento, setalimento] = useState<Alimento>();
   // useEffect(() => {
   //   navigation.setOptions({
-  //     title: name,
+    //     title: name,
   //   });
   // }, []);
-  //un useefect para una tarea en especifico
+  //useefect para una tarea en especifico
   useEffect(() => {
     loadAlimento();
   }, []);
-
+  
   const loadAlimento = async () => {
     const res = await getById(id);
     // //setalimento(res);
     // console.log(alimento)
   };
-
+  const addAlimentoUsuario = async () => {
+    const userId = await AsyncStorage.getItem('userId');
+    const res = await addAlimento({UsuarioId:userId,AlimentoId:id,Cantidad:parseInt(cantidad)});
+    // //setalimento(res);
+    console.log(res)
+  };
+  const {cantidad, onChange} = useForm({
+    cantidad: '',
+  });
   //const { id,name, picture } = alimento;
   const {top} = useSafeAreaInsets();
   //const { isLoading, alimentoItem } = useAlimento(id)
@@ -43,49 +64,122 @@ export const AlimentoScreen = ({navigation, route}: Props) => {
           ...styles.headerContainer,
           backgroundColor: '#C6E2CF',
         }}>
-        {/* <TouchableOpacity
-          onPress={() => navigation.pop()}
-          activeOpacity={0.5}
-          style={{
-            ...styles.backButton,
-            top: top + 10,
-          }}>
-          <Icon name="arrow-back-outline" color="white" size={40} />
-        </TouchableOpacity> */}
         <Text
           style={{
             ...styles.alimentoName,
             top: top + 40,
           }}>
-          {name}
+          {alimentoDetalle?.nombre}
         </Text>
-        <Image
+        <>
+          <KeyboardAvoidingView
+            style={{flex: 1,top: top + 40,}}
+            // behavior={(Platform.OS === 'ios') ?  'padding' : 'height'}
+          >
+            <View style={alimentoTheme.container}>
+              <Text style={alimentoTheme.label}>Cantidad</Text>
+              <TextInput
+                placeholder="Ingresar Cantidad"
+                placeholderTextColor="#009688"
+                //keyboardType='email-address'
+                underlineColorAndroid="#009688"
+                style={[
+                  alimentoTheme.inputField,
+                  Platform.OS === 'ios' && alimentoTheme.inputFieldIOS,
+                ]}
+                selectionColor="white" //al seleccionar texto doble click
+                onChangeText={value => onChange(value, 'cantidad')}
+                value={cantidad}
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+              <View style={alimentoTheme.buttonContainer}>
+                <TouchableOpacity
+                  activeOpacity={0.4}
+                  style={alimentoTheme.button}
+                  onPress={addAlimentoUsuario}>
+                  <Text style={alimentoTheme.buttonText}>Agregar</Text>
+                </TouchableOpacity>
+              </View>
+
+              {/* <View style={alimentoTheme.newUserContainer}>
+            <TouchableOpacity activeOpacity={0.4} onPress={ () => navigation.navigate('RegisterScreen') }>
+              <Text style={alimentoTheme.buttonText}>Nueva Cuenta</Text>
+            </TouchableOpacity>
+          </View> */}
+            </View>
+          </KeyboardAvoidingView>
+        </>
+
+        {/* <Image
           source={require('../../assets/pokebola-blanca.png')}
           style={{
             ...styles.imagenBack,
           }}
-        />
-        <FadeInImage
+        /> */}
+        {/* <FadeInImage
           uri="../assets/pokebola.png"
           style={{
             ...styles.imagen,
           }}
-        />
+        /> */}
+      </View>
+      <View>
+        <Text
+          style={{
+            ...styles.alimentoProp,
+            top: top + 40,
+          }}>
+          Porción: {alimentoDetalle?.porcion}
+        </Text>
+        <Text
+          style={{
+            ...styles.alimentoProp,
+            top: top + 40,
+          }}>
+          Peso: {alimentoDetalle?.pesoGramos}g
+        </Text>
+        <Text
+          style={{
+            ...styles.alimentoProp,
+            top: top + 40,
+          }}>
+          Proteína: {alimentoDetalle?.proteina_g}g
+        </Text>
+        <Text
+          style={{
+            ...styles.alimentoProp,
+            top: top + 40,
+          }}>
+          Grasas: {alimentoDetalle?.grasaTotal_g}g
+        </Text>
+        <Text
+          style={{
+            ...styles.alimentoProp,
+            top: top + 40,
+          }}>
+          Carbohidratos: {alimentoDetalle?.carbohidratos_g}g
+        </Text>
       </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   headerContainer: {
-    height: 370,
+    height: 400,
     zIndex: 999,
-    borderBottomRightRadius: 1000,
-    borderBottomLeftRadius: 1000,
+    borderBottomRightRadius: 100,
+    borderBottomLeftRadius: 100,
   },
-  backButton: {},
   alimentoName: {
-    color: 'white',
+    color: '#009688',
     fontSize: 40,
+    alignSelf: 'flex-start',
+    left: 20,
+  },
+  alimentoProp: {
+    color: 'black',
+    fontSize: 25,
     alignSelf: 'flex-start',
     left: 20,
   },

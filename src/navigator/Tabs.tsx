@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import { RutinasNavigator } from './RutinasNavigator';
 import { DietasNavigator } from './DietasNavigator';
 import { AlimentosNavigator } from './AlimentosNavigator';
+import { UsuarioNavigator } from './UsuarioNavigator';
 
 
 const Tab = createBottomTabNavigator();
@@ -56,7 +57,7 @@ export const Tabs = () => {
       />
       <Tab.Screen
         name="Usuario"
-        component={AlimentosNavigator}
+        component={UsuarioNavigator}
         options={{
           tabBarLabel: 'Usuario',
           tabBarIcon: () => (
