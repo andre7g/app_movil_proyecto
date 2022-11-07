@@ -13,20 +13,6 @@ import {
 import Icon from 'react-native-vector-icons/Ionicons';
 import {AuthContext} from '../../context/AuthContext';
 import {loginTheme} from '../../theme/loginTheme';
-
-// import profile from './assets/profile.png';
-// Tab ICons...
-// import home from './assets/home.png';
-// import search from './assets/search.png';
-// import notifications from './assets/bell.png';
-// import settings from './assets/settings.png';
-// import logout from './assets/logout.png';
-// Menu
-// import menu from './assets/menu.png';
-// import close from './assets/close.png';
-
-// Photo
-// import photo from '../../assets/pokebola.png';
 import {UsuarioContext} from '../../context/UsuarioContext';
 import AppLoader from '../../components/loading/AppLoader';
 
@@ -34,7 +20,6 @@ const UsuarioScreen = () => {
   const {user, logOut} = useContext(AuthContext);
   const {userData, getUsuario, loading} = useContext(UsuarioContext);
   const [currentTab, setCurrentTab] = useState('Calorias');
-  const [maxRating, setmaxRating] = useState([1, 2, 3, 4, 5]);
   // To get the curretn Status of menu ...
   const [showMenu, setShowMenu] = useState(false);
   let numero = 4;
